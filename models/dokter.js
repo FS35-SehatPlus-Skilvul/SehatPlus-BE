@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Dokter.init({
     users_id: DataTypes.INTEGER,
     nama: DataTypes.STRING,
-    gender: DataTypes.ENUM,
+    gender: DataTypes.ENUM("laki-laki", "perempuan"),
     spesialisasi: DataTypes.STRING,
     jadwal: DataTypes.DATE
   }, {

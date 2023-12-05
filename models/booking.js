@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Booking.init({
     id_pasien: DataTypes.STRING,
     id_dokter: DataTypes.STRING,
-    status: DataTypes.ENUM
+    status: DataTypes.ENUM("sukses", "gagal"),
   }, {
     sequelize,
     modelName: 'Booking',
