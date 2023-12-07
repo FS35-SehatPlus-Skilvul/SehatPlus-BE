@@ -2,45 +2,50 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Dokter', {
-      id_dokter: {
+    await queryInterface.createTable('Konsultasi', {
+      id_konsultasi: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      pasien_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'User',
-          key: 'id_user',
+          model: 'Pasien',
+          key: 'id_pasien',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
       },
-      nama: {
-        type: Sequelize.STRING,
-      },
-      email: {
-        type: Sequelize.STRING,
-      },
-      gender: {
-        type: Sequelize.ENUM,
-        values: ["Laki-laki", "Perempuan"],
-      },
-      phone: {
-        type: Sequelize.STRING
-      },
-      spesialisasi_id: {
+      dokter_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Spesialisasi',
-          key: 'id_spesialisasi',
+          model: 'Dokter',
+          key: 'id_dokter',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
+      },
+      jadwal_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Jadwal',
+          key: 'id_jadwal',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
+      },
+      status_pembayaran: {
+        type: Sequelize.ENUM('Belum Bayar', 'Sudah Bayar'),
+        allowNull: false,
+      },
+      status_konsultasi: {
+        type: Sequelize.ENUM('In Progress', 'Completed', 'Canceled'),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -53,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Dokter');
+    await queryInterface.dropTable('Konsultasi');
   }
 };

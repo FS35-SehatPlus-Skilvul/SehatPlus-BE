@@ -2,22 +2,13 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-
-    await queryInterface.bulkInsert ("Pasiens", [
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("Pasien", [
       {
-        users_id: 1,
+        user_id: 1,  // Sesuaikan dengan id yang sesuai
         nama: "Amalia Kartika",
-        gender: "perempuan",
+        email: 'amaliakartika@mail.com',
+        gender: "Perempuan",
         phone: "081212345678",
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -26,11 +17,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-       * Add commands to revert seed here.
-       *
-       * Example:
-       * await queryInterface.bulkDelete('People', null, {});
-       */
+    // Menambahkan perintah bulkDelete untuk menghapus data yang telah diinsert
+    await queryInterface.bulkDelete("Pasien", null, {});
   }
 };

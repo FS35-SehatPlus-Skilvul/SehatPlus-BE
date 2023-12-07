@@ -1,37 +1,32 @@
-// models/user.js
+// models/spesialisasi.js
 'use strict';
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Spesialisasi extends Model {
     static associate(models) {
       // define association here
     }
   }
 
-  User.init(
+  Spesialisasi.init(
     {
-      id_user: {
+      id_spesialisasi: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      username: DataTypes.STRING,
-      password: DataTypes.STRING,
-      role: {
-        type: DataTypes.ENUM,
-        values: ["admin", "dokter", "pasien"],
-      },
+      nama_spesialisasi: DataTypes.STRING,
     },
     {
       sequelize,
-      modelName: 'User',
-      tableName: 'User', 
+      modelName: 'Spesialisasi',
+      tableName: 'Spesialisasi',
       createdAt: 'createdAt',
       updatedAt: 'updatedAt',
     }
   );
 
-  return User;
+  return Spesialisasi;
 };

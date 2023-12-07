@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
@@ -13,13 +13,14 @@ module.exports = {
      * }], {});
     */
 
-    await queryInterface.bulkInsert ("Dokters", [
+    await queryInterface.bulkInsert("Dokter", [
       {
-        users_id: 2,
-        nama: "dr. Amalia Kartika, Sp. OG",
-        gender: "perempuan",
-        spesialisasi: "Spesialis Kandungan",
-        jadwal: new Date(),
+        user_id: 2,
+        nama: "dr. Rizky Anugrah, Sp. OG",
+        email: "rizky@mail.com",
+        gender: "Laki-Laki",
+        phone: "085754612468",
+        spesialisasi_id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -27,11 +28,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-       * Add commands to revert seed here.
-       *
-       * Example:
-       * await queryInterface.bulkDelete('People', null, {});
-       */
+    await queryInterface.bulkDelete("Dokter", null, {});
   }
 };

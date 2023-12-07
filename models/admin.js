@@ -1,23 +1,45 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Admin extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Admin.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
     }
   }
-  Admin.init({
-    users_id: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Admin',
-  });
+
+  Admin.init(
+    {
+      id_admin: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      nama: DataTypes.STRING,
+      email: DataTypes.STRING,
+      gender: {
+        type: DataTypes.ENUM,
+        values: ["Laki-laki", "Perempuan"],
+      },
+      phone: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'Admin',
+      tableName: 'Admin',
+      createdAt: 'createdAt',
+      updatedAt: 'updatedAt',
+    }
+  );
+
   return Admin;
 };

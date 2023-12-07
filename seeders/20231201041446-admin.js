@@ -13,9 +13,13 @@ module.exports = {
      * }], {});
     */
 
-    await queryInterface.bulkInsert ("Admins", [
+    await queryInterface.bulkInsert ("Admin", [
       {
-        users_id: 3,
+        user_id: 3, 
+        nama: 'Admin Anugrah',
+        email: 'admin1@example.com',
+        gender: 'Laki-laki',
+        phone: '08123456789',
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -23,11 +27,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-       * Add commands to revert seed here.
-       *
-       * Example:
-       * await queryInterface.bulkDelete('People', null, {});
-       */
+    await queryInterface.bulkDelete("Admin", null, {});
   }
 };

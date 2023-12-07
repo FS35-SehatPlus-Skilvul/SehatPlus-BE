@@ -2,19 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Pasiens', {
-      id: {
+    await queryInterface.createTable('Pasien', {
+      id_pasien: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      users_id: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
-          key: 'id',
+          model: 'User',
+          key: 'id_user',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
@@ -22,9 +22,12 @@ module.exports = {
       nama: {
         type: Sequelize.STRING,
       },
+      email: {
+        type: Sequelize.STRING,
+      },
       gender: {
         type: Sequelize.ENUM,
-        values: ["laki-laki", "perempuan"],
+        values: ["Laki-Laki", "Perempuan"],
       },
       phone: {
         type: Sequelize.STRING
@@ -40,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Pasiens');
+    await queryInterface.dropTable('Pasien');
   }
 };
