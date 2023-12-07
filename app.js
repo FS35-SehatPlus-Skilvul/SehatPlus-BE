@@ -13,8 +13,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api/s1", routes);
+app.use("", routes);
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}/api/s1`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

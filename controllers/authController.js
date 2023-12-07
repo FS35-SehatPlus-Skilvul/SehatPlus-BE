@@ -1,15 +1,15 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+require('dotenv').config();
 
 const register = async (req, res) => {
   try {
-    const { username, email, password, role } = req.body;
+    const { username, password, role } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 10);
 
     const user = await User.create({
       username,
-      email,
       password: hashedPassword,
       role,
     });
@@ -22,8 +22,8 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const { username, password } = req.body; 
+    const user = await User.findOne({ where: { username } });
 
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
@@ -35,7 +35,7 @@ const login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' });
     }
 
-    const token = jwt.sign({ userId: user.id, role: user.role }, 'sangatrahasia', {
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: '1h', 
     });
 

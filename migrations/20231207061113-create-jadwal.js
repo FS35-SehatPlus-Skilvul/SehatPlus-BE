@@ -2,36 +2,31 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Bookings', {
-      id: {
+    await queryInterface.createTable('Jadwal', {
+      id_jadwal: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_pasien: {
+      dokter_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Pasiens',
-          key: 'id',
+          model: 'Dokter',
+          key: 'id_dokter',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
       },
-      id_dokter: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Dokters',
-          key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
+      tanggal: {
+        type: Sequelize.DATE
       },
-      status: {
-        type: Sequelize.ENUM,
-        values: ["berhasil", "gagal"],
+      jam_mulai: {
+        type: Sequelize.TIME
+      },
+      jam_selesai: {
+        type: Sequelize.TIME
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Bookings');
+    await queryInterface.dropTable('Jadwal');
   }
 };

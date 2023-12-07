@@ -2,22 +2,35 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Admins', {
-      id: {
+    await queryInterface.createTable('Admin', {
+      id_admin: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      users_id: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
-          key: 'id',
+          model: 'User',
+          key: 'id_user',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
+      },
+      nama: {
+        type: Sequelize.STRING,
+      },
+      email: {
+        type: Sequelize.STRING,
+      },
+      gender: {
+        type: Sequelize.ENUM,
+        values: ["Laki-laki", "Perempuan"],
+      },
+      phone: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Admins');
+    await queryInterface.dropTable('Admin');
   }
 };

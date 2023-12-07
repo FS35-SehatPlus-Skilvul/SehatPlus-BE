@@ -13,10 +13,9 @@ module.exports = {
      * }], {});
      */
 
-    await queryInterface.bulkInsert("Users", [
+    await queryInterface.bulkInsert("User", [
       {
         username: "Amalia",
-        email: "amalia@mail.com",
         password: "123456",
         role: "pasien",
         createdAt: new Date(),
@@ -24,8 +23,7 @@ module.exports = {
       },
 
       {
-        username: "Kartika",
-        email: "kartika@mail.com",
+        username: "Rizky",
         password: "123456",
         role: "dokter",
         createdAt: new Date(),
@@ -34,7 +32,6 @@ module.exports = {
 
       {
         username: "Admin",
-        email: "admin@mail.com",
         password: "123456",
         role: "admin",
         createdAt: new Date(),
@@ -45,11 +42,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete("User", null, {});
   },
 };
