@@ -4,13 +4,6 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Pasien extends Model {
-    static associate(models) {
-      Pasien.belongsTo(models.User, {
-        foreignKey: 'user_id',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      });
-    }
   }
 
   Pasien.init(
@@ -21,10 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       nama: DataTypes.STRING,
       email: DataTypes.STRING,
       gender: {
@@ -32,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         values: ["Laki-Laki", "Perempuan"],
       },
       phone: DataTypes.STRING,
+      password: DataTypes.STRING,
     },
     {
       sequelize,

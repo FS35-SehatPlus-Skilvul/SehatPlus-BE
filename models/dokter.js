@@ -5,12 +5,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Dokter extends Model {
     static associate(models) {
-      Dokter.belongsTo(models.User, {
-        foreignKey: 'user_id',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      });
-
       Dokter.belongsTo(models.Spesialisasi, {
         foreignKey: 'spesialisasi_id',
         onDelete: 'CASCADE',
@@ -27,10 +21,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       nama: DataTypes.STRING,
       email: DataTypes.STRING,
       gender: {
@@ -38,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         values: ["Laki-laki", "Perempuan"],
       },
       phone: DataTypes.STRING,
+      password: DataTypes.STRING,
       spesialisasi_id: {
         type: DataTypes.INTEGER,
         allowNull: false,

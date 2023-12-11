@@ -1,12 +1,13 @@
 const { Admin } = require('../models');
+const bcrypt = require('bcryptjs');
 
-const getAllAdmin = async (req, res) => {
+const getAllAdmins = async (req, res) => {
   try {
-    const allAdmin = await Admin.findAll();
+    const allAdmins = await Admin.findAll();
 
-    return res.status(200).json({ data: allAdmin });
+    return res.status(200).json(allAdmins);
   } catch (error) {
-    console.error('Error getting all Admin:', error);
+    console.error('Error getting all Admins:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
@@ -20,7 +21,7 @@ const getAdminById = async (req, res) => {
       return res.status(404).json({ message: 'Admin not found' });
     }
 
-    return res.status(200).json({ data: admin });
+    return res.status(200).json(admin);
   } catch (error) {
     console.error('Error getting Admin by ID:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -29,15 +30,18 @@ const getAdminById = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   try {
-    const { users_id } = req.body;
-
-    // Validasi data input jika diperlukan
+    const { nama, email, gender, phone, password } = req.body;
+    const hashedPassword = bcrypt.hashSync(password, 10);
 
     const newAdmin = await Admin.create({
-      users_id,
+      nama,
+      email,
+      gender,
+      phone,
+      password: hashedPassword,
     });
 
-    return res.status(201).json({ message: 'Admin created successfully', data: newAdmin });
+    return res.status(201).json({ message: 'Admin created successfully', admin: newAdmin });
   } catch (error) {
     console.error('Error creating Admin:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -47,13 +51,11 @@ const createAdmin = async (req, res) => {
 const editAdminById = async (req, res) => {
   try {
     const adminId = req.params.id;
-    const { users_id } = req.body;
-
-    // Validasi data input jika diperlukan
+    const { nama, email, gender, phone } = req.body;
 
     const updatedAdmin = await Admin.update(
-      { users_id },
-      { where: { id: adminId } }
+      { nama, email, gender, phone },
+      { where: { id_admin: adminId } }
     );
 
     if (updatedAdmin[0] === 0) {
@@ -71,7 +73,7 @@ const deleteAdminById = async (req, res) => {
   try {
     const adminId = req.params.id;
 
-    const deletedAdmin = await Admin.destroy({ where: { id: adminId } });
+    const deletedAdmin = await Admin.destroy({ where: { id_admin: adminId } });
 
     if (deletedAdmin === 0) {
       return res.status(404).json({ message: 'Admin not found' });
@@ -85,7 +87,7 @@ const deleteAdminById = async (req, res) => {
 };
 
 module.exports = {
-  getAllAdmin,
+  getAllAdmins,
   getAdminById,
   createAdmin,
   editAdminById,

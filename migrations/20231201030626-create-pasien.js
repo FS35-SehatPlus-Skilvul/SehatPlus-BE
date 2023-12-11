@@ -9,16 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'User',
-          key: 'id_user',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
-      },
       nama: {
         type: Sequelize.STRING,
       },
@@ -31,6 +21,9 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING
+      },
+      password: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

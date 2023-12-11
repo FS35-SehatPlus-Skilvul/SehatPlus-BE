@@ -1,10 +1,11 @@
 const { Pasien } = require('../models');
+const bcrypt = require('bcryptjs');
 
 const getAllPasien = async (req, res) => {
   try {
     const allPasien = await Pasien.findAll();
 
-    return res.status(200).json( allPasien );
+    return res.status(200).json(allPasien);
   } catch (error) {
     console.error('Error getting all Pasien:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -20,9 +21,29 @@ const getPasienById = async (req, res) => {
       return res.status(404).json({ message: 'Pasien not found' });
     }
 
-    return res.status(200).json( pasien );
+    return res.status(200).json(pasien);
   } catch (error) {
     console.error('Error getting Pasien by ID:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+const createPasien = async (req, res) => {
+  try {
+    const { nama, email, gender, phone, password } = req.body;
+    const hashedPassword = bcrypt.hashSync(password, 10);
+
+    const newPasien = await Pasien.create({
+      nama,
+      email,
+      gender,
+      phone,
+      password: hashedPassword,
+    });
+
+    return res.status(201).json(newPasien);
+  } catch (error) {
+    console.error('Error creating Pasien:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
@@ -30,13 +51,11 @@ const getPasienById = async (req, res) => {
 const editPasienById = async (req, res) => {
   try {
     const pasienId = req.params.id;
-    const { nama, gender, phone } = req.body;
-
-    // Validasi data input jika diperlukan
+    const { nama, email, gender, phone } = req.body;
 
     const updatedPasien = await Pasien.update(
-      { nama, gender, phone },
-      { where: { id: pasienId } }
+      { nama, email, gender, phone },
+      { where: { id_pasien: pasienId } }
     );
 
     if (updatedPasien[0] === 0) {
@@ -54,7 +73,7 @@ const deletePasienById = async (req, res) => {
   try {
     const pasienId = req.params.id;
 
-    const deletedPasien = await Pasien.destroy({ where: { id: pasienId } });
+    const deletedPasien = await Pasien.destroy({ where: { id_pasien: pasienId } });
 
     if (deletedPasien === 0) {
       return res.status(404).json({ message: 'Pasien not found' });
@@ -70,6 +89,7 @@ const deletePasienById = async (req, res) => {
 module.exports = {
   getAllPasien,
   getPasienById,
+  createPasien,
   editPasienById,
   deletePasienById,
 };
