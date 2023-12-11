@@ -3,13 +3,6 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Admin extends Model {
-    static associate(models) {
-      Admin.belongsTo(models.User, {
-        foreignKey: 'user_id',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      });
-    }
   }
 
   Admin.init(
@@ -20,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       nama: DataTypes.STRING,
       email: DataTypes.STRING,
       gender: {
@@ -31,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         values: ["Laki-laki", "Perempuan"],
       },
       phone: DataTypes.STRING,
+      password: DataTypes.STRING,
     },
     {
       sequelize,

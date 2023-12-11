@@ -1,10 +1,14 @@
-const { Dokter } = require('../models');
+const { Dokter, Spesialisasi } = require('../models');
 
 const getAllDokter = async (req, res) => {
   try {
-    const allDokter = await Dokter.findAll();
+    const allDokter = await Dokter.findAll({
+      include: [
+        { model: Spesialisasi, attributes: ['nama_spesialisasi'] },
+      ],
+    });
 
-    return res.status(200).json({ data: allDokter });
+    return res.status(200).json(allDokter);
   } catch (error) {
     console.error('Error getting all Dokter:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -14,13 +18,17 @@ const getAllDokter = async (req, res) => {
 const getDokterById = async (req, res) => {
   try {
     const dokterId = req.params.id;
-    const dokter = await Dokter.findByPk(dokterId);
+    const dokter = await Dokter.findByPk(dokterId, {
+      include: [
+        { model: Spesialisasi, attributes: ['nama_spesialisasi'] },
+      ],
+    });
 
     if (!dokter) {
       return res.status(404).json({ message: 'Dokter not found' });
     }
 
-    return res.status(200).json({ data: dokter });
+    return res.status(200).json(dokter);
   } catch (error) {
     console.error('Error getting Dokter by ID:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -29,19 +37,17 @@ const getDokterById = async (req, res) => {
 
 const createDokter = async (req, res) => {
   try {
-    const { users_id, nama, gender, spesialisasi, jadwal } = req.body;
-
-    // Validasi data input jika diperlukan
+    const { nama, email, gender, phone, spesialisasi_id } = req.body;
 
     const newDokter = await Dokter.create({
-      users_id,
       nama,
+      email,
       gender,
-      spesialisasi,
-      jadwal,
+      phone,
+      spesialisasi_id,
     });
 
-    return res.status(201).json({ message: 'Dokter created successfully', data: newDokter });
+    return res.status(201).json(newDokter);
   } catch (error) {
     console.error('Error creating Dokter:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -51,13 +57,11 @@ const createDokter = async (req, res) => {
 const editDokterById = async (req, res) => {
   try {
     const dokterId = req.params.id;
-    const { users_id, nama, gender, spesialisasi, jadwal } = req.body;
-
-    // Validasi data input jika diperlukan
+    const { nama, email, gender, phone, spesialisasi_id } = req.body;
 
     const updatedDokter = await Dokter.update(
-      { users_id, nama, gender, spesialisasi, jadwal },
-      { where: { id: dokterId } }
+      { nama, email, gender, phone, spesialisasi_id },
+      { where: { id_dokter: dokterId } }
     );
 
     if (updatedDokter[0] === 0) {
@@ -75,7 +79,7 @@ const deleteDokterById = async (req, res) => {
   try {
     const dokterId = req.params.id;
 
-    const deletedDokter = await Dokter.destroy({ where: { id: dokterId } });
+    const deletedDokter = await Dokter.destroy({ where: { id_dokter: dokterId } });
 
     if (deletedDokter === 0) {
       return res.status(404).json({ message: 'Dokter not found' });
