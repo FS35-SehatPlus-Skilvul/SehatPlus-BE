@@ -2,12 +2,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Jadwal', {
-      id_jadwal: {
+    await queryInterface.createTable('booking', {
+      id_booking: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      pasien_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Pasien',
+          key: 'id_pasien',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
       },
       dokter_id: {
         type: Sequelize.INTEGER,
@@ -39,6 +49,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Jadwal');
+    await queryInterface.dropTable('booking');
   }
 };

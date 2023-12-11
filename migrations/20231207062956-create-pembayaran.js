@@ -9,13 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      konsultasi_id: {
+      booking_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
         references: {
-          model: 'Konsultasi',
-          key: 'id_konsultasi',
+          model: 'Booking',
+          key: 'id_booking',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
