@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "",
-    "database": "sehatplus_db",
-    "host": "localhost",
+    "username": " freedb_sehatmin",
+    "password": "TpaKkz%8BJKQa2p",
+    "database": "freedb_sehatplus_db",
+    "host": " sql.freedb.tech",
     "dialect": "mysql"
   },
   "test": {

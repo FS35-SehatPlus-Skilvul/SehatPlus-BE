@@ -29,14 +29,15 @@ const getBookingById = async (req, res) => {
 
 const createBooking = async (req, res) => {
   try {
-    const { id_pasien, id_dokter, status } = req.body;
+    const { pasien_id, dokter_id, tanggal, jam_mulai, jam_selesai } = req.body;
 
-    // Validasi data input jika diperlukan
 
     const newBooking = await Booking.create({
-      id_pasien,
-      id_dokter,
-      status,
+      pasien_id,
+      dokter_id,
+      tanggal,
+      jam_mulai,
+      jam_selesai,
     });
 
     return res.status(201).json({ message: 'Booking created successfully', data: newBooking });
@@ -49,13 +50,12 @@ const createBooking = async (req, res) => {
 const editBookingById = async (req, res) => {
   try {
     const bookingId = req.params.id;
-    const { id_pasien, id_dokter, status } = req.body;
+    const { pasien_id, dokter_id, tanggal, jam_mulai, jam_selesai } = req.body;
 
-    // Validasi data input jika diperlukan
 
     const updatedBooking = await Booking.update(
-      { id_pasien, id_dokter, status },
-      { where: { id: bookingId } }
+      { pasien_id, dokter_id, tanggal, jam_mulai, jam_selesai },
+      { where: { id_booking: bookingId } }
     );
 
     if (updatedBooking[0] === 0) {
@@ -73,7 +73,7 @@ const deleteBookingById = async (req, res) => {
   try {
     const bookingId = req.params.id;
 
-    const deletedBooking = await Booking.destroy({ where: { id: bookingId } });
+    const deletedBooking = await Booking.destroy({ where: { id_booking: bookingId } });
 
     if (deletedBooking === 0) {
       return res.status(404).json({ message: 'Booking not found' });

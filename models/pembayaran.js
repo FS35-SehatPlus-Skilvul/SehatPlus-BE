@@ -5,8 +5,8 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Pembayaran extends Model {
     static associate(models) {
-      Pembayaran.belongsTo(models.Konsultasi, {
-        foreignKey: 'konsultasi_id',
+      Pembayaran.belongsTo(models.Booking, {
+        foreignKey: 'booking_id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      konsultasi_id: {
+      booking_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
