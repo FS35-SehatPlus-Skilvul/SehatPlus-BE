@@ -5,7 +5,7 @@ const { authenticate, authorize } = require('../middleware/authMiddleware');
 
 router.get('/', authenticate, authorize(["admin"]), pembayaranController.getAllPembayaran);
 router.get('/:id', authenticate, pembayaranController.getPembayaranById);
-router.post('/', authenticate, authorize(["admin"]), pembayaranController.createPembayaran); 
+router.post('/', authenticate, authorize(["admin", "pasien"]), pembayaranController.createPembayaran); 
 router.put('/:id', authenticate, authorize(["admin"]), pembayaranController.editPembayaranById);
 router.delete('/:id', authenticate, authorize(["admin"]), pembayaranController.deletePembayaranById);
 
